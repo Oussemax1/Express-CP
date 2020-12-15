@@ -3,23 +3,55 @@ const app = express();
 // const path = require('path');
 const router = express.Router();
 
-// const logger = (req, res, next) => {          
-//   let d=new Date();                           
-//   let j=d.getDay();
-//   let h=d.getHours();
-//   if((h<=17 && h>=9) && (j>=1 && j<=5)){
-//     let url = req.replace('/', "")
-//     if (!url){                                  // MAFHEMTECH, KIFECH NA3MIL EL VERIFICATION MTA3 EL WA9T
-//       res.render('home')                       
-//     }else{
-//       res.render(url)
-//     }
-//   }else {
-//     res.render('not available at this time')
-//   }
-//   next();
-// }
-//app.use(logger)
+app.use(express.static(__dirname+'/public'));
+
+ 
+
+const workingTime = (req, res, next) => {
+
+ let openDay = new Date();
+
+ 
+
+ if (
+
+   openDay.getHours() > 09 &&
+
+   openDay.getHours() < 17 &&
+
+   openDay.getDay() > 0 &&
+
+   openDay.getDay() < 6
+
+ ) {
+
+   next();
+
+ } else {
+
+   console.log("Our office is closed !!!");
+
+   res.send("<h1> please contact us on working time :) ");
+
+ }
+
+};
+
+ app.get("/", function (req, res) {
+
+   res.sendFile(__dirname + "/public/home.html");
+
+ });
+
+ app.get("/contact", function (req, res) {
+
+   res.sendFile(__dirname + "/public/contact.html");
+
+ });
+
+ app.get("/service", function (req, res) {
+
+   res.send });
 
 app.use(express.static(__dirname + '/public'))
 
